@@ -3,9 +3,7 @@ import org.gradle.api.tasks.testing.logging.*
 
 plugins {
     kotlin("jvm") version "1.4.31"
-    kotlin("plugin.serialization") version "1.4.31"
     application
-    id("org.jetbrains.dokka") version "1.4.20"
 }
 
 group = "me.user"
@@ -17,9 +15,6 @@ repositories {
 }
 
 dependencies {
-    implementation("com.charleskorn.kaml:kaml:0.28.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
-    implementation("com.squareup:kotlinpoet:1.7.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 }
 
