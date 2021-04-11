@@ -18,7 +18,7 @@ open class NumberBinaryExpression(override val leftPart: Expression, override va
 class PolynomialImplementation(val coefficientList: MutableList<Int>) {
 
     val degree
-        get() = coefficientList.indexOfLast { it != 0 }
+        get() = coefficientList.size - 1
 
     fun equals(toCheck: PolynomialImplementation): Boolean {
         val result = true
