@@ -15,7 +15,7 @@ open class NumberBinaryExpression(override val leftPart: Expression, override va
     override fun toString(): String = "($leftPart$type$rightPart)"
 }
 
-data class PolynomialImplementation(val coefficientList: MutableList<Int>) {
+class PolynomialImplementation(val coefficientList: MutableList<Int>) {
 
     val degree
         get() = coefficientList.indexOfLast { it != 0 }

@@ -22,7 +22,7 @@ abstract class BoolBinaryExpression(override val leftPart: Expression, override 
     abstract fun simplify(): Bool
 }
 
-data class Greater(override val leftPart: Numeric, override val rightPart: Numeric, override val type: String = ">") : BoolBinaryExpression(leftPart, rightPart, ">"), Bool {
+class Greater(override val leftPart: Numeric, override val rightPart: Numeric, override val type: String = ">") : BoolBinaryExpression(leftPart, rightPart, ">"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
     override fun simplify(): Bool {
@@ -30,14 +30,14 @@ data class Greater(override val leftPart: Numeric, override val rightPart: Numer
     }
 }
 
-data class PolynomialHelper(val leftNum: Numeric, val rightNum: Numeric) {
+class PolynomialHelper(val leftNum: Numeric, val rightNum: Numeric) {
 
     val polynomial: PolynomialImplementation
         get() = Minus(leftNum, rightNum).toPolynomialImplementation
 
 }
 
-data class GreaterZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
+class GreaterZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
 
     override fun simplify(): Bool {
         return when (polynomial.degree) {
@@ -64,8 +64,7 @@ data class GreaterZeroPolynomial(val polynomial: PolynomialImplementation) : Boo
     }
 
 }
-
-data class Less(override val leftPart: Numeric, override val rightPart: Numeric) : BoolBinaryExpression(leftPart, rightPart, "<"), Bool {
+class Less(override val leftPart: Numeric, override val rightPart: Numeric) : BoolBinaryExpression(leftPart, rightPart, "<"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
     override fun simplify(): Bool {
@@ -73,7 +72,7 @@ data class Less(override val leftPart: Numeric, override val rightPart: Numeric)
     }
 }
 
-data class Equals(override val leftPart: Numeric, override val rightPart: Numeric, val booleanValue: Boolean? = null) : BoolBinaryExpression(leftPart, rightPart, "="), Bool {
+class Equals(override val leftPart: Numeric, override val rightPart: Numeric, val booleanValue: Boolean? = null) : BoolBinaryExpression(leftPart, rightPart, "="), Bool {
     companion object {
 
 
@@ -88,8 +87,7 @@ data class Equals(override val leftPart: Numeric, override val rightPart: Numeri
         return EqualsZeroPolynomial(PolynomialHelper(leftPart, rightPart).polynomial).simplify()
     }
 }
-
-data class EqualsZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
+class EqualsZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
 
     override fun simplify(): Bool = when (polynomial.degree) {
             -1 -> TRUE
@@ -113,7 +111,7 @@ data class EqualsZeroPolynomial(val polynomial: PolynomialImplementation) : Bool
     }
 }
 
-data class And(override val leftPart: Bool, override val rightPart: Bool) : BoolBinaryExpression(leftPart, rightPart, "&"), Bool {
+class And(override val leftPart: Bool, override val rightPart: Bool) : BoolBinaryExpression(leftPart, rightPart, "&"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
     override fun simplify(): Bool {
@@ -134,7 +132,7 @@ data class And(override val leftPart: Bool, override val rightPart: Bool) : Bool
     }
 }
 
-data class Or(override val leftPart: Bool, override val rightPart: Bool) : BoolBinaryExpression(leftPart, rightPart, "|"), Bool {
+class Or(override val leftPart: Bool, override val rightPart: Bool) : BoolBinaryExpression(leftPart, rightPart, "|"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
     override fun simplify(): Bool {

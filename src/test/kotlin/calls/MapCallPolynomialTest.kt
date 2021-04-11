@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import parser.parseCall
 
-internal class MapCallPolyTest {
+internal class MapCallPolynomialTest {
 
     @Test
     fun testToString() {

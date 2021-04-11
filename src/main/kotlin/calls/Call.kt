@@ -1,6 +1,5 @@
 package calls
 
-import exceptions.TypeException
 import expressions.*
 import expressions.bool.And
 import expressions.bool.Bool
@@ -15,7 +14,7 @@ data class MapCall(val expression: Numeric, override val type: String = "map") :
     override fun toString(): String = "$type{$expression}"
 }
 
-data class MapCallPoly(val polynomialImplementation: PolynomialImplementation, override val type: String = "map") :
+data class MapCallPolynomial(val polynomialImplementation: PolynomialImplementation, override val type: String = "map") :
     Call {
     override fun toString(): String = "$type{$polynomialImplementation}"
 }
@@ -50,7 +49,7 @@ fun CallChain.convert(): String {
 
     return listOf(FilterCall(filterExpression?.simplify() as Bool? ?: Equals.TRUE),
         when (mapCompositions.lastOrNull()) {
-            is Numeric -> MapCallPoly(mapCompositions.last().toPolynomialImplementation)
+            is Numeric -> MapCallPolynomial(mapCompositions.last().toPolynomialImplementation)
             else -> MapCall(Numeric.Element)
         }).joinToString("%>%")
 

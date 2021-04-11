@@ -22,7 +22,7 @@ internal class ParserKtTest {
 
         val b = CallChain(listOf<Call>(MapCall(Plus(Numeric.Element, ConstantExpression("10"))), FilterCall(Greater(Numeric.Element, ConstantExpression("10")))))
 
-        assertEquals(b, a)
+        assertEquals(b.toString(), a.toString())
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class ParserKtTest {
 
         val b = FilterCall(Greater(Numeric.Element, ConstantExpression("10")))
 
-        assertEquals(b, a)
+        assertEquals(b.toString(), a.toString())
     }
 
     @Test
@@ -46,7 +46,7 @@ internal class ParserKtTest {
     fun parseConstantExpression() {
         val a = "-10"
 
-        assertEquals(ConstantExpression("-10"), parseConstantExpression(a))
+        assertEquals(ConstantExpression("-10").toString(), parseConstantExpression(a).toString())
     }
 
 }
