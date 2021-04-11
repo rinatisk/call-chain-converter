@@ -1,0 +1,1 @@
+map{(element*element)}%>%map{(element*element)}%>%map{(element*element)}%>%map{(element-1)}%>%map{(element*5)}
