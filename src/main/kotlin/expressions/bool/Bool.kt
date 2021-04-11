@@ -15,19 +15,14 @@ interface Bool : Expression {
 
 abstract class BoolBinaryExpression(override val leftPart: Expression, override val rightPart: Expression, override val type: String) :
     BinaryExpression(leftPart, rightPart, type) {
-    override fun toString(): String {
-        return "($leftPart$type$rightPart)"
-    }
-
+    override fun toString(): String = "($leftPart$type$rightPart)"
     abstract fun simplify(): Bool
 }
 
 class Greater(override val leftPart: Numeric, override val rightPart: Numeric, override val type: String = ">") : BoolBinaryExpression(leftPart, rightPart, ">"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
-    override fun simplify(): Bool {
-        return GreaterZeroPolynomial(PolynomialHelper(leftPart, rightPart).polynomial).simplify()
-    }
+    override fun simplify(): Bool = GreaterZeroPolynomial(PolynomialHelper(leftPart, rightPart).polynomial).simplify()
 }
 
 class PolynomialHelper(val leftNum: Numeric, val rightNum: Numeric) {
@@ -39,19 +34,15 @@ class PolynomialHelper(val leftNum: Numeric, val rightNum: Numeric) {
 
 class GreaterZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
 
-    override fun simplify(): Bool {
-        return when (polynomial.degree) {
+    override fun simplify(): Bool = when (polynomial.degree) {
             -1 -> FALSE
             0 -> if (polynomial.coefficientList[0] > 0) TRUE else FALSE
-            else -> return this
-        }
+            else -> this
     }
 
-    fun compositionOr(toCompose: GreaterZeroPolynomial): Bool {
-        return when {
-            this.polynomial.equals(toCompose.polynomial) -> return this
+    fun compositionOr(toCompose: GreaterZeroPolynomial): Bool = when {
+            this.polynomial.equals(toCompose.polynomial) -> this
             else -> Or(this, toCompose)
-        }
     }
 
     fun compositionAnd(toCompose: GreaterZeroPolynomial): Bool = when {
@@ -67,9 +58,7 @@ class GreaterZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
 class Less(override val leftPart: Numeric, override val rightPart: Numeric) : BoolBinaryExpression(leftPart, rightPart, "<"), Bool {
     override fun toString(): String = "($leftPart$type$rightPart)"
 
-    override fun simplify(): Bool {
-        return GreaterZeroPolynomial(PolynomialHelper(rightPart, leftPart).polynomial).simplify()
-    }
+    override fun simplify(): Bool = GreaterZeroPolynomial(PolynomialHelper(rightPart, leftPart).polynomial).simplify()
 }
 
 class Equals(override val leftPart: Numeric, override val rightPart: Numeric, val booleanValue: Boolean? = null) : BoolBinaryExpression(leftPart, rightPart, "="), Bool {
@@ -83,9 +72,7 @@ class Equals(override val leftPart: Numeric, override val rightPart: Numeric, va
 
     override fun toString(): String = "($leftPart=$rightPart)"
 
-    override fun simplify(): Bool {
-        return EqualsZeroPolynomial(PolynomialHelper(leftPart, rightPart).polynomial).simplify()
-    }
+    override fun simplify(): Bool = EqualsZeroPolynomial(PolynomialHelper(leftPart, rightPart).polynomial).simplify()
 }
 class EqualsZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
 
@@ -95,20 +82,16 @@ class EqualsZeroPolynomial(val polynomial: PolynomialImplementation) : Bool {
             else -> this
     }
 
-    fun compositionOr(toCompose: EqualsZeroPolynomial): Bool {
-        return if (this.polynomial.equals(toCompose.polynomial)) this
+    fun compositionOr(toCompose: EqualsZeroPolynomial): Bool =
+        if (this.polynomial.equals(toCompose.polynomial)) this
         else Or(this, toCompose)
-    }
 
-    fun compositionAnd(toCompose: EqualsZeroPolynomial): Bool {
-        return if (this.polynomial.equals(toCompose.polynomial)) this
+    fun compositionAnd(toCompose: EqualsZeroPolynomial): Bool =
+        if (this.polynomial.equals(toCompose.polynomial)) this
         else And(this, toCompose)
-    }
 
 
-    override fun toString(): String {
-        return "($polynomial=0)"
-    }
+    override fun toString(): String = "($polynomial=0)"
 }
 
 class And(override val leftPart: Bool, override val rightPart: Bool) : BoolBinaryExpression(leftPart, rightPart, "&"), Bool {

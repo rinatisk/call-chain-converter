@@ -50,7 +50,6 @@ fun CallChain.convert(): String {
     return listOf(FilterCall(filterExpression?.simplify() as Bool? ?: Equals.TRUE),
         when (mapCompositions.lastOrNull()) {
             is Numeric -> MapCallPolynomial(mapCompositions.last().toPolynomialImplementation)
-            else -> MapCall(Numeric.Element)
-        }).joinToString("%>%")
+            else -> MapCall(Numeric.Element)}).joinToString("%>%")
 
 }

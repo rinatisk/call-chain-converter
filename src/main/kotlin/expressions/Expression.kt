@@ -85,6 +85,7 @@ class PolynomialImplementation(val coefficientList: MutableList<Int>) {
     }
 
     override fun toString(): String {
+
         // because indexOfLast return -1 when no non-zero element in list
         if (degree == -1) return "0"
 
@@ -124,8 +125,7 @@ fun newOperator(sign: String, leftExpression: Expression, rightExpression: Expre
     } else throw ParseException()
 }
 
-fun Expression.composition(toCompose: Expression): Expression {
-    return when (this) {
+fun Expression.composition(toCompose: Expression): Expression = when (this) {
         is Numeric.Element -> toCompose
         is BinaryExpression -> {
             val leftPartCompos = leftPart.composition(toCompose)
@@ -134,4 +134,3 @@ fun Expression.composition(toCompose: Expression): Expression {
         }
         else -> this
     }
-}

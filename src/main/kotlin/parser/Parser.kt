@@ -7,9 +7,7 @@ import expressions.*
 import expressions.bool.*
 import expressions.num.*
 
-fun parseCallChain(callChain: String): CallChain {
-    return CallChain(callChain.split("%>%").map { parseCall(it) })
-}
+fun parseCallChain(callChain: String): CallChain = CallChain(callChain.split("%>%").map { parseCall(it) })
 
 fun parseCall(call: String): Call = when {
     call.startsWith("map{") && call.endsWith("}") -> {
@@ -30,7 +28,9 @@ fun parseCall(call: String): Call = when {
 }
 
 fun parseExpression(expression: String): Expression {
-    if (expression == "element") return Numeric.Element
+    if (expression == "element") {
+        return Numeric.Element
+    }
     return if (isConstantExpression(expression)) parseConstantExpression(expression) else parseBinaryOperation(expression)
 }
 
